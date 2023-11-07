@@ -1,6 +1,6 @@
 <br clear="both">
 
-<h2 align="left">Ayo👋! I'm Ceso, new in coding</h2>
+<h2 align="left">didn't society learn you to shut up? </h2>
 
 ###
 
