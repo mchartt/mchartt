@@ -1,6 +1,6 @@
 <br clear="both">
 
-<h2 align="left"> maybe?  </h2>
+<h2 align="left"> maybe studying  </h2>
 
 ###
 
