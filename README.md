@@ -8,7 +8,6 @@
 
 <p>Maybe studying or coding</p>
 
-<br clear="both">
 
 <!-- ─────────────────────────  TECH STACK  ───────────────────────── -->
 
