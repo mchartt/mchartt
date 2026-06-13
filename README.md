@@ -3,10 +3,10 @@
 <h1>Matteo Cesandri</h1>
 
 <a href="https://github.com/mchartt">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=BD93F9&vCenter=true&width=420&lines=maybe+studying;maybe+coding;definitely+procrastinating" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=BD93F9&vCenter=true&width=420&lines=maybe+studying;maybe+coding;never+procrastinating" alt="Typing SVG" />
 </a>
 
-<p>Studente, smanetto con il codice quando non sto rimandando.</p>
+<p>Maybe studying or coding</p>
 
 <br clear="both">
 
