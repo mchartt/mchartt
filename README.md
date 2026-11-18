@@ -59,15 +59,8 @@ Currently exploring software architecture, data management and the details that 
 ## Activity
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/overview.dark.svg" />
-  <img src="./assets/overview.light.svg" width="100%" alt="GitHub overview: contributions, repositories, pull requests, issues and stars" />
-</picture>
-
-<br /><br />
-
-<picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/contributions.dark.svg" />
-  <img src="./assets/contributions.light.svg" width="100%" alt="Current and longest contribution streaks, with an isometric 3D calendar of the last twelve months" />
+  <img src="./assets/contributions.light.svg" width="100%" alt="Contributions, active days, current streak and longest streak in the past year, with an isometric 3D calendar" />
 </picture>
 
 <br /><br />
@@ -86,8 +79,8 @@ Currently exploring software architecture, data management and the details that 
 
 <details>
   <summary>About these visuals</summary>
-  <p>The graphics are generated twice a day by GitHub Actions and served from this repository. Contribution counts follow the data visible to the workflow token; language shares measure code size across public source repositories, not proficiency.</p>
-  <p>Stats and the 3D calendar: <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Contribution snake: <a href="https://github.com/Platane/snk">snk</a>. The animated banner is custom SVG, with reduced-motion support.</p>
+  <p>The graphics are generated twice a day by GitHub Actions and served from this repository. The 3D calendar, streaks and snake use the contribution counts already visible on my public GitHub profile, including anonymous private counts when shared. Statistics cover the last 365 days; an empty today does not break yesterday's current streak.</p>
+  <p>The banner, skyline and snake are custom SVG, with reduced-motion support. Language cards and toolkit badges use <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Language shares measure code size across public source repositories, not proficiency.</p>
   <p><a href="https://github.com/mchartt/mchartt/actions/workflows/snake.yml">View the latest refresh →</a></p>
 </details>
 
