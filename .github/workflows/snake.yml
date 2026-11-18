@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/snake.yml'
+      - 'scripts/render_activity.py'
 
 concurrency:
   group: profile-visuals
@@ -24,12 +25,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
-      - name: Generate profile statistics and contribution skyline
+      - name: Generate language statistics and toolkit badges
         uses: seijikohara/profile-cards-action@ae2000130dd7676ce46b1109daa0b6fe8a6d921c # v1.17.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           username: ${{ github.repository_owner }}
-          cards: overview,contributions,languages
+          cards: languages
           output-dir: assets
           themes: light,dark
           palette: purple
@@ -47,13 +48,10 @@ jobs:
             Docker
             Git
 
-      - name: Generate contribution snake
-        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            assets/snake.dark.svg?palette=github-dark&color_snake=%23b99cff&color_dots=%23161b22,%23312a49,%235e438e,%238764c0,%23b99cff
-            assets/snake.light.svg?palette=github&color_snake=%237044c6&color_dots=%23ebedf0,%23e2d4f4,%23b99cde,%23936ec8,%237044c6
+      - name: Generate skyline, streaks and snake from the public calendar
+        env:
+          PROFILE_USERNAME: ${{ github.repository_owner }}
+        run: python3 scripts/render_activity.py
 
       - name: Validate generated SVGs
         shell: bash
@@ -61,7 +59,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
-          for card in ('overview', 'contributions', 'languages', 'snake'):
+          for card in ('contributions', 'languages', 'snake'):
               for theme in ('light', 'dark'):
                   path = Path('assets') / f'{card}.{theme}.svg'
                   root = ET.parse(path).getroot()
