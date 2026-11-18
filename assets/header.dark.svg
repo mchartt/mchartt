@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+      <title id="title">Matteo Cesandri — Computer Engineering</title>
+      <desc id="desc">Politecnico di Milano. Java, TypeScript and databases. Floating isometric cubes orbit a wireframe platform.</desc>
+      <defs>
+        <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#263242"/></pattern>
+        <linearGradient id="rule"><stop stop-color="#b99cff"/><stop offset="1" stop-color="#67e8f9"/></linearGradient>
+      </defs>
+      <style>
+        text{font-family:Arial,Helvetica,sans-serif} .mono{font-family:'Courier New',monospace}
+        .float{animation:float 7s ease-in-out infinite}
+        .orbit{stroke-dasharray:5 9;animation:orbit 45s linear infinite}
+        .cursor{animation:blink 1.5s step-end infinite}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        @keyframes orbit{to{stroke-dashoffset:-280}}
+        @keyframes blink{50%{opacity:0}}
+        @media(prefers-reduced-motion:reduce){.float,.orbit,.cursor{animation:none}}
+      </style>
+      <rect x="1" y="1" width="1198" height="358" rx="20" fill="#0d1117" stroke="#263242"/>
+      <path d="M22 1H1178" stroke="url(#rule)" stroke-width="2"/>
+      <rect x="690" y="24" width="484" height="308" fill="url(#dots)"/>
+      <text x="52" y="54" fill="#b99cff" font-size="12" letter-spacing="2.3" class="mono">MCHARTT / COMPUTER ENGINEERING</text>
+      <text x="48" y="128" fill="#f0f6fc" font-size="62" font-weight="700" letter-spacing="-2.5">Matteo</text>
+      <text x="48" y="193" fill="#f0f6fc" font-size="62" font-weight="700" letter-spacing="-2.5">Cesandri<tspan fill="#b99cff">.</tspan></text>
+      <text x="52" y="238" fill="#9aa7b5" font-size="19">Java · TypeScript · Databases</text>
+      <path d="M52 270H615" stroke="#263242"/>
+      <text x="52" y="308" fill="#9aa7b5" font-size="13" class="mono">Politecnico di Milano</text>
+      <text x="428" y="308" fill="#b99cff" font-size="13" class="mono">&gt; git push<tspan class="cursor"> _</tspan></text>
+      <path d="M750 270 L917 173 L1084 270 L917 328 Z M750 270 L917 270 L1084 270 M834 222 L1000 318 M1000 222 L834 318" fill="none" stroke="#263242"/>
+      <ellipse class="orbit" cx="915" cy="238" rx="187" ry="63" fill="none" stroke="#b99cff" stroke-opacity=".5"/>
+      <circle cx="1102" cy="238" r="4" fill="#67e8f9"/>
+      <g class="float" style="animation-delay:-0s">
+          <polygon points="900,74 964.0840000000001,111.0 900,148 835.9159999999999,111.0" fill="#b99cff" fill-opacity=".13" stroke="#b99cff"/>
+          <polygon points="835.9159999999999,111.0 900,148 900,222 835.9159999999999,185.0" fill="#b99cff" fill-opacity=".05" stroke="#b99cff"/>
+          <polygon points="900,148 964.0840000000001,111.0 964.0840000000001,185.0 900,222" fill="#67e8f9" fill-opacity=".08" stroke="#67e8f9"/>
+          <path d="M900,74 V148 L964.0840000000001,185.0" fill="none" stroke="#67e8f9" stroke-opacity=".45"/>
+        </g><g class="float" style="animation-delay:-1.5s">
+          <polygon points="1024,164 1055.176,182.0 1024,200 992.824,182.0" fill="#b99cff" fill-opacity=".13" stroke="#b99cff"/>
+          <polygon points="992.824,182.0 1024,200 1024,236 992.824,218.0" fill="#b99cff" fill-opacity=".05" stroke="#b99cff"/>
+          <polygon points="1024,200 1055.176,182.0 1055.176,218.0 1024,236" fill="#67e8f9" fill-opacity=".08" stroke="#67e8f9"/>
+          <path d="M1024,164 V200 L1055.176,218.0" fill="none" stroke="#67e8f9" stroke-opacity=".45"/>
+        </g><g class="float" style="animation-delay:-3s">
+          <polygon points="802,200 825.382,213.5 802,227 778.618,213.5" fill="#b99cff" fill-opacity=".13" stroke="#b99cff"/>
+          <polygon points="778.618,213.5 802,227 802,254 778.618,240.5" fill="#b99cff" fill-opacity=".05" stroke="#b99cff"/>
+          <polygon points="802,227 825.382,213.5 825.382,240.5 802,254" fill="#67e8f9" fill-opacity=".08" stroke="#67e8f9"/>
+          <path d="M802,200 V227 L825.382,240.5" fill="none" stroke="#67e8f9" stroke-opacity=".45"/>
+        </g>
+      <text x="917" y="67" fill="#9aa7b5" font-size="10" letter-spacing="2" text-anchor="middle" class="mono">IDEA → CODE → ITERATE</text>
+    </svg>
