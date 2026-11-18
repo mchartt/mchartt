@@ -1,78 +1,99 @@
-<img align="right" width="300" src="https://media.tenor.com/KwPYVVWL-VgAAAAd/regular-show-technology.gif" alt="Regular Show" />
-
-<h1>Matteo Cesandri</h1>
-
-<a href="https://github.com/mchartt">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=BD93F9&vCenter=true&width=420&lines=maybe+studying;maybe+coding;never+procrastinating" alt="Typing SVG" />
-</a>
-
-<p>Maybe studying or coding</p>
-
-
-<!-- ─────────────────────────  TECH STACK  ───────────────────────── -->
-
-<h3 align="center">Tech Stack</h3>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/header.dark.svg" />
+  <img src="./assets/header.light.svg" width="100%" alt="Matteo Cesandri — Computer Engineering at Politecnico di Milano. Java, TypeScript and databases." />
+</picture>
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="Python" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="40" alt="Java" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="40" alt="C++" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="HTML5" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="CSS3" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="40" alt="VS Code" />
+  <a href="#selected-work">Selected work</a> &nbsp; / &nbsp;
+  <a href="#toolkit">Toolkit</a> &nbsp; / &nbsp;
+  <a href="#activity">Activity</a> &nbsp; / &nbsp;
+  <a href="#explore">Explore</a>
 </p>
 
-<br>
+I'm a **Computer Engineering student at Politecnico di Milano**. I build web applications with Java, Spring Boot and TypeScript, with a focus on backend development, databases and usable interfaces.
 
-<!-- ─────────────────────────  GITHUB STATS  ───────────────────────── -->
+Currently exploring software architecture, data management and the details that make an application reliable.
 
-<h3 align="center">GitHub Stats</h3>
+## Selected work
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=mchartt&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&hide_border=true&title_color=BD93F9&icon_color=FF79C6&card_width=480" height="170" alt="Statistiche GitHub" />
-</div>
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/mchartt/SmartDesk-SE-PolimiProject">
+        <img src="https://raw.githubusercontent.com/mchartt/SmartDesk-SE-PolimiProject/main/preview.png" width="100%" alt="SmartDesk coworking platform preview" />
+      </a>
+      <h3><a href="https://github.com/mchartt/SmartDesk-SE-PolimiProject">01 / SmartDesk ↗</a></h3>
+      <p>A coworking platform for listing spaces, booking desks and managing maintenance requests.</p>
+      <p><code>Java</code> <code>Spring Boot</code> <code>Angular</code> <code>MySQL</code></p>
+      <sub>Software Engineering · Politecnico di Milano</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/mchartt/YouTicket-2025-2026-Polimi-TIW">
+        <img src="https://raw.githubusercontent.com/mchartt/YouTicket-2025-2026-Polimi-TIW/main/preview.png" width="100%" alt="YouTicket IT helpdesk application preview" />
+      </a>
+      <h3><a href="https://github.com/mchartt/YouTicket-2025-2026-Polimi-TIW">02 / YouTicket ↗</a></h3>
+      <p>An IT helpdesk with ticket assignment, role-based access, attachments and real-time conversations.</p>
+      <p><code>React</code> <code>TypeScript</code> <code>Express</code> <code>PostgreSQL</code></p>
+      <sub>Web Technologies · Politecnico di Milano</sub>
+    </td>
+  </tr>
+</table>
 
-<div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=mchartt&theme=dracula&hide_border=true&ring=BD93F9&fire=FF79C6&currStreakLabel=BD93F9" height="170" alt="Streak" />
-</div>
+<p align="right"><a href="https://github.com/mchartt?tab=repositories">Explore public repositories →</a></p>
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=mchartt&layout=compact&langs_count=6&theme=dracula&hide_border=true&title_color=BD93F9&card_width=480" height="150" alt="Linguaggi più usati" />
-</div>
+## Toolkit
 
-<br>
-
-<!-- ─────────────────────────  CONTATTI  ───────────────────────── -->
-
-<h3 align="center">Contatti</h3>
-
-<p align="center">
-  <a href="https://instagram.com/matteocesandri_" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=Instagram&logo=instagram&label=&color=E4405F&logoColor=white&labelColor=&style=for-the-badge" height="34" alt="Instagram" />
-  </a>
-  &nbsp;
-  <a href="mailto:matteo.cesandri@edu.elis.org" target="_blank">
-    <img src="https://img.shields.io/static/v1?message=Email&logo=gmail&label=&color=D14836&logoColor=white&labelColor=&style=for-the-badge" height="34" alt="Email" />
-  </a>
+<p>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/java.dark.svg" /><img src="./assets/badges/java.light.svg" alt="Java" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/spring.dark.svg" /><img src="./assets/badges/spring.light.svg" alt="Spring" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/typescript.dark.svg" /><img src="./assets/badges/typescript.light.svg" alt="TypeScript" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/angular.dark.svg" /><img src="./assets/badges/angular.light.svg" alt="Angular" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/react.dark.svg" /><img src="./assets/badges/react.light.svg" alt="React" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/python.dark.svg" /><img src="./assets/badges/python.light.svg" alt="Python" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/postgresql.dark.svg" /><img src="./assets/badges/postgresql.light.svg" alt="PostgreSQL" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/mysql.dark.svg" /><img src="./assets/badges/mysql.light.svg" alt="MySQL" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/docker.dark.svg" /><img src="./assets/badges/docker.light.svg" alt="Docker" height="28" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/badges/git.dark.svg" /><img src="./assets/badges/git.light.svg" alt="Git" height="28" /></picture>
 </p>
 
-<br>
+## Activity
 
-<!-- ─────────────────────────  SNAKE  ───────────────────────── -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/overview.dark.svg" />
+  <img src="./assets/overview.light.svg" width="100%" alt="GitHub overview: contributions, repositories, pull requests, issues and stars" />
+</picture>
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/mchartt/mchartt/output/snake.svg" alt="Snake animation" />
-</div>
+<br /><br />
 
-<br>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/contributions.dark.svg" />
+  <img src="./assets/contributions.light.svg" width="100%" alt="Current and longest contribution streaks, with an isometric 3D calendar of the last twelve months" />
+</picture>
 
-<!-- ─────────────────────────  COUNTER  ───────────────────────── -->
+<br /><br />
 
-<div align="center">
-  <img src="https://profile-counter.glitch.me/mchartt/count.svg?" alt="Visite profilo" />
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/languages.dark.svg" />
+  <img src="./assets/languages.light.svg" width="100%" alt="Language distribution across public source repositories" />
+</picture>
+
+### Contribution snake
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/snake.dark.svg" />
+  <img src="./assets/snake.light.svg" width="100%" alt="Animated snake moving through my GitHub contribution calendar" />
+</picture>
+
+<details>
+  <summary>About these visuals</summary>
+  <p>The graphics are generated twice a day by GitHub Actions and served from this repository. Contribution counts follow the data visible to the workflow token; language shares measure code size across public source repositories, not proficiency.</p>
+  <p>Stats and the 3D calendar: <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Contribution snake: <a href="https://github.com/Platane/snk">snk</a>. The animated banner is custom SVG, with reduced-motion support.</p>
+  <p><a href="https://github.com/mchartt/mchartt/actions/workflows/snake.yml">View the latest refresh →</a></p>
+</details>
+
+## Explore
+
+<p>
+  <a href="https://github.com/mchartt?tab=repositories">All repositories ↗</a> &nbsp; / &nbsp;
+  <a href="https://github.com/mchartt/mchartt">Profile source ↗</a>
+</p>
