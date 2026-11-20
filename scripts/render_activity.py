@@ -179,7 +179,7 @@ def render_snake(days, theme):
     steps = len(points)-1
     motion = ''.join(f'{i/steps*100:.5f}%{{transform:translate({x}px,{y}px)}}' for i,(x,y) in enumerate(points))
     out = svg_start(846, 146, 'Animated snake traversing the public profile contribution calendar', p)
-    out.append(f'<style>@keyframes walk{{{motion}}}.segment{{animation:walk 42s linear infinite}}@media(prefers-reduced-motion:reduce){{.segment{{display:none}}}}</style>')
+    out.append(f'<style>@keyframes walk{{{motion}}}.segment{{animation:walk 42s linear infinite}}@media(prefers-reduced-motion:reduce){{.segment{{animation:none!important}}}}</style>')
     lookup = {cell:i for i,cell in enumerate(path)}
     for (w,d), (day,count) in cells.items():
         x,y = 25+w*15,23+d*15
@@ -197,7 +197,7 @@ def render_snake(days, theme):
             animate=''
         out.append(f'<rect x="{x}" y="{y}" width="11" height="11" rx="2" fill="{color}"{animate}><title>{day.isoformat()}: {count} contributions</title></rect>')
     for i in reversed(range(8)):
-        out.append(f'<rect class="segment" x="0" y="0" width="11" height="11" rx="3" fill="{p["cyan"] if i==0 else p["accent"]}" opacity="{1-i*.08:.2f}" style="animation-delay:{i*42/steps:.5f}s;transform:translate({points[0][0]}px,{points[0][1]}px)"/>')
+        out.append(f'<rect class="segment" x="0" y="0" width="11" height="11" rx="3" fill="{p["cyan"] if i==0 else p["accent"]}" opacity="{1-i*.08:.2f}" style="animation-delay:-{i*42/steps:.5f}s;transform:translate({points[0][0]}px,{points[0][1]}px)"/>')
     out += [text(25, 134, 'Same calendar. One continuous path.', p['muted'], 10, 'class="mono"'), '</svg>']
     return '\n'.join(out)+'\n'
 
