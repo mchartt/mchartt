@@ -53,7 +53,7 @@ def validate():
                 raise ValueError(f"Invalid SVG root: {rel}")
             if not root.attrib.get("viewBox"):
                 raise ValueError(f"Missing SVG viewBox: {rel}")
-            if not root.find(SVG_NS + "title") and not root.attrib.get("aria-label"):
+            if root.find(SVG_NS + "title") is None and not root.attrib.get("aria-label"):
                 raise ValueError(f"Missing accessible SVG title: {rel}")
 
     # Check the output of both renderers even if the README changes later.
