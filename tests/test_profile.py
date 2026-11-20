@@ -2,7 +2,7 @@
 from datetime import date, timedelta
 import unittest
 
-from scripts.render_activity import CalendarParser, calendar_days, stats, render_snake, snake_route
+from scripts.render_activity import CalendarParser, calendar_days, stats, render_snake, snake_route, snake_laps
 from scripts.render_terminal import render as render_terminal
 import xml.etree.ElementTree as ET
 
@@ -58,6 +58,22 @@ class ProfileTests(unittest.TestCase):
         self.assertTrue({cell for cell, (_, n) in cells.items() if n > 0}.issubset(route_a))
         for a, b in zip(route_a, route_a[1:]):
             self.assertEqual(abs(a[0]-b[0]) + abs(a[1]-b[1]), 1)
+
+    def test_four_laps_are_distinct_and_eat_every_active_cell(self):
+        start = date(2026, 1, 1)
+        days = [(start + timedelta(days=i), 1 if i % 5 == 0 else 0)
+                for i in range(365)]
+        offset = (days[0][0].weekday() + 1) % 7
+        cells = {divmod(offset+i, 7): day for i, day in enumerate(days)}
+        laps = snake_laps(cells, "four-lap-test")
+        self.assertEqual(len(laps), 4)
+        self.assertEqual(len({tuple(lap) for lap in laps}), 4)
+        for lap in laps:
+            self.assertEqual(lap[0], lap[-1])
+            self.assertEqual(lap[0], laps[0][0])
+            self.assertTrue({cell for cell, (_, n) in cells.items() if n > 0}.issubset(lap))
+            for a, b in zip(lap, lap[1:]):
+                self.assertEqual(abs(a[0]-b[0]) + abs(a[1]-b[1]), 1)
 
     def test_snake_head_leads_tail(self):
         start = date(2026, 1, 1)
