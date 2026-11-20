@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="394" viewBox="0 0 1200 394" role="img" aria-labelledby="title desc">
+<title id="title">Matteo Cesandri — developer terminal with animated MC ASCII art</title>
+<desc id="desc">A self-contained terminal panel with a monospaced command line, an ASCII-art MC monogram, and subtle animated scanning lights.</desc>
+<defs>
+<linearGradient id="accent"><stop stop-color="#b99cff"/><stop offset="1" stop-color="#67e8f9"/></linearGradient>
+<linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#67e8f9" stop-opacity="0"/><stop offset=".5" stop-color="#67e8f9" stop-opacity=".15"/><stop offset="1" stop-color="#67e8f9" stop-opacity="0"/></linearGradient>
+<clipPath id="terminal-clip"><rect x="1" y="1" width="1198" height="392" rx="18"/></clipPath>
+</defs>
+<style><![CDATA[
+text{font-family:'Courier New',Consolas,monospace}
+.cursor{animation:blink 1.3s step-end infinite}
+.scan{animation:scan 10s linear infinite}
+.ascii{animation:fade 5s ease-in-out infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes scan{from{transform:translateY(-40px)}to{transform:translateY(420px)}}
+@keyframes fade{0%,100%{opacity:1}50%{opacity:.84}}
+@media(prefers-reduced-motion:reduce){.cursor,.scan,.ascii{animation:none!important}}
+]]></style>
+<rect x="1" y="1" width="1198" height="392" rx="18" fill="#0d1117" stroke="#334155"/>
+<g clip-path="url(#terminal-clip)">
+<rect x="0" y="0" width="1200" height="40" fill="#111924"/>
+<path d="M0 40H1200" stroke="#334155"/>
+<path d="M1 1H1199" stroke="url(#accent)" stroke-width="2"/>
+<circle cx="26" cy="20" r="4" fill="#b99cff" opacity=".85"/>
+<circle cx="44" cy="20" r="4" fill="#67e8f9" opacity=".65"/>
+<circle cx="62" cy="20" r="4" fill="#97a4ba" opacity=".4"/>
+<text x="93" y="25" font-size="11" fill="#97a4ba" letter-spacing="1.8">MCHARTT  /  PERSONAL WORKSPACE</text>
+<text x="1169" y="25" font-size="10" fill="#97a4ba" text-anchor="end">TERMINAL 01</text>
+<path d="M654 66V332" stroke="#334155" stroke-dasharray="2 7"/>
+<text x="52" y="99" fill="#b99cff" font-size="13" letter-spacing="1.4">01   /   IDENTITY</text>
+<text x="52" y="142" fill="#67e8f9" font-size="17">$</text>
+<text x="79" y="142" fill="#97a4ba" font-size="17">whoami --verbose</text>
+<text x="52" y="201" fill="#edf3ff" font-size="38" font-weight="700" letter-spacing="-1.7">SOFTWARE</text>
+<text x="52" y="244" fill="#edf3ff" font-size="38" font-weight="700" letter-spacing="-1.7">ENGINEERING<tspan fill="url(#accent)">_</tspan></text>
+<text x="53" y="280" fill="#97a4ba" font-size="14">Backend / web / data systems</text>
+<text x="53" y="320" fill="#67e8f9" font-size="13">&gt; build --thoughtfully<tspan class="cursor"> &#x2588;</tspan></text>
+<text x="706" y="76" fill="#b99cff" font-size="12" letter-spacing="1.8">02   /   ASCII SIGNATURE</text>
+<path d="M703 93H1148" stroke="#334155" opacity=".75"/>
+<text x="1148" y="76" fill="#97a4ba" font-size="11" text-anchor="end">HEX / GLYPH</text>
+<text x="710" y="125" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="125" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@      @@    @@@@@@@@ </text>
+<text x="710" y="149" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="149" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@@    @@@   @@@      @</text>
+<text x="710" y="173" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="173" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@@@  @@@@   @@        </text>
+<text x="710" y="197" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="197" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@ @@@@ @@   @@        </text>
+<text x="710" y="221" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="221" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@  @@  @@   @@        </text>
+<text x="710" y="245" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="245" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@      @@   @@        </text>
+<text x="710" y="269" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="269" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@      @@   @@        </text>
+<text x="710" y="293" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="293" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@      @@   @@@      @</text>
+<text x="710" y="317" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="#97a4ba" opacity=".16">..........   ..........</text>
+<text class="ascii" x="710" y="317" font-size="20" font-weight="700" letter-spacing=".35" xml:space="preserve" fill="url(#accent)">@@      @@    @@@@@@@@ </text>
+<rect class="scan" x="680" y="74" width="510" height="45" fill="url(#scan)" pointer-events="none"/>
+<path d="M52 352H1148" stroke="#334155"/>
+<text x="52" y="375" fill="#97a4ba" font-size="10" letter-spacing="1">POLITECNICO DI MILANO   //   ENGINEERING IN PROGRESS</text>
+<text x="1148" y="375" fill="#67e8f9" font-size="10" letter-spacing="1" text-anchor="end">[  BUILD  /  LEARN  /  ITERATE  ]</text>
+</g></svg>
