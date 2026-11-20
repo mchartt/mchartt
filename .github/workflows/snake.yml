@@ -10,6 +10,7 @@ on:
       - '.github/workflows/snake.yml'
       - 'scripts/render_activity.py'
       - 'scripts/render_header.py'
+      - 'scripts/render_terminal.py'
       - 'scripts/validate_profile.py'
       - 'tests/**'
       - 'README.md'
@@ -31,6 +32,9 @@ jobs:
 
       - name: Generate profile header
         run: python3 scripts/render_header.py
+
+      - name: Generate ASCII terminal artwork
+        run: python3 scripts/render_terminal.py
 
       - name: Run offline regression tests
         run: python3 -m unittest discover -s tests -v
@@ -61,6 +65,7 @@ jobs:
       - name: Generate skyline, streaks and snake from the public calendar
         env:
           PROFILE_USERNAME: ${{ github.repository_owner }}
+          SNAKE_SEED: ${{ github.run_id }}
         run: python3 scripts/render_activity.py
 
       - name: Validate every README image and generated artifact
