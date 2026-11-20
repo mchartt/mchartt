@@ -24,7 +24,7 @@ class ReadmeImages(HTMLParser):
         attrs = dict(attrs)
         if tag == "source" and "srcset" in attrs:
             self.picture_sources.append(attrs["srcset"])
-        if tag == "img" and "src" in attrs:
+        if tag == "img" and attrs.get("src", "").startswith("./assets/"):
             self.picture_fallbacks.append(attrs["src"])
         if tag in ("img", "source"):
             for attr in ("src", "srcset"):
