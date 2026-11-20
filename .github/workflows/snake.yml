@@ -9,6 +9,10 @@ on:
     paths:
       - '.github/workflows/snake.yml'
       - 'scripts/render_activity.py'
+      - 'scripts/render_header.py'
+      - 'scripts/validate_profile.py'
+      - 'tests/**'
+      - 'README.md'
 
 concurrency:
   group: profile-visuals
@@ -24,6 +28,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Generate profile header
+        run: python3 scripts/render_header.py
+
+      - name: Run offline regression tests
+        run: python3 -m unittest discover -s tests -v
 
       - name: Generate language statistics and toolkit badges
         uses: seijikohara/profile-cards-action@ae2000130dd7676ce46b1109daa0b6fe8a6d921c # v1.17.7
@@ -53,18 +63,8 @@ jobs:
           PROFILE_USERNAME: ${{ github.repository_owner }}
         run: python3 scripts/render_activity.py
 
-      - name: Validate generated SVGs
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import xml.etree.ElementTree as ET
-          for card in ('contributions', 'languages', 'snake'):
-              for theme in ('light', 'dark'):
-                  path = Path('assets') / f'{card}.{theme}.svg'
-                  root = ET.parse(path).getroot()
-                  assert root.tag == '{http://www.w3.org/2000/svg}svg', path
-          PY
+      - name: Validate every README image and generated artifact
+        run: python3 scripts/validate_profile.py
 
       - name: Commit updated visuals
         shell: bash
