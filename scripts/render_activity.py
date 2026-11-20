@@ -165,7 +165,7 @@ def render_skyline(days, theme):
     return '\n'.join(out)+'\n'
 
 
-def snake_route(cells, seed):
+def snake_route(cells, seed, origin=None):
     """Create a reproducibly randomized, closed, grid-adjacent route.
 
     Choose nearby uncollected contribution cells in a different order every
@@ -176,7 +176,9 @@ def snake_route(cells, seed):
     rng = random.Random(str(seed))
     weeks = max(week for week, _ in cells) + 1
     remaining = {cell for cell, (_, count) in cells.items() if count > 0}
-    start = rng.choice(sorted(remaining)) if remaining else (weeks // 2, 3)
+    start = origin if origin is not None else (rng.choice(sorted(remaining)) if remaining else (weeks // 2, 3))
+    if not (0 <= start[0] < weeks and 0 <= start[1] < 7):
+        raise ValueError('Starting cell lies outside the contribution calendar')
     route = [start]
     remaining.discard(start)
 
@@ -229,6 +231,15 @@ def snake_route(cells, seed):
     return route
 
 
+def snake_laps(cells, seed, count=4):
+    """Rotate through distinct randomized routes inside one SVG animation."""
+    first = snake_route(cells, f'{seed}:0')
+    origin = first[0]
+    return [first] + [snake_route(cells, f'{seed}:{i}', origin=origin)
+                      for i in range(1, count)]
+
+
+
 def render_snake(days, theme, seed="preview"):
     p = PALETTES[theme]
     maximum = max(count for _, count in days) or 1
@@ -237,9 +248,13 @@ def render_snake(days, theme, seed="preview"):
     for day, count in days:
         week, weekday = divmod((day-start).days, 7)
         cells[(week, weekday)] = (day, count)
-    route = snake_route(cells, seed)
+    routes = snake_laps(cells, seed)
+    # All laps start/end on the same cell; joining them cannot teleport.
+    route = list(routes[0])
+    for lap in routes[1:]:
+        route.extend(lap[1:])
     steps = len(route) - 1
-    seconds = max(24, min(100, steps * .24))
+    seconds = max(28, min(240, steps * .26))
 
     def percent(i):
         return f'{100*i/steps:.5f}%'
@@ -269,15 +284,21 @@ def render_snake(days, theme, seed="preview"):
              'class="mono" text-anchor="end"')
     ]
 
-    # At 100% all eaten cells return for the next animated lap.
-    # The exact *first* visit, not the target order, determines consumption.
-    first_visit = {}
-    for i, cell in enumerate(route[:-1]):
-        if cells.get(cell, (None, 0))[1] and cell not in first_visit:
-            first_visit[cell] = i
-    expected = {cell for cell, (_, count) in cells.items() if count}
-    if set(first_visit) != expected:
-        raise ValueError('The snake must collect all active contribution cells')
+    # A single SVG plays four DIFFERENT randomized laps. During each lap
+    # every active square is eaten, then the grid resets for the next lap.
+    # No scripting or external images are needed in the GitHub README.
+    active = {cell for cell, (_, count) in cells.items() if count}
+    lap_events = []
+    boundaries = [0]
+    for lap in routes:
+        first = {}
+        for i, cell in enumerate(lap[:-1]):
+            if cell in active and cell not in first:
+                first[cell] = boundaries[-1] + i
+        if set(first) != active:
+            raise ValueError('Every randomized lap must eat all active cells')
+        lap_events.append(first)
+        boundaries.append(boundaries[-1] + len(lap)-1)
 
     css = [
         f'@keyframes snake-walk{{{motion}}}',
@@ -287,20 +308,23 @@ def render_snake(days, theme, seed="preview"):
         '@media(prefers-reduced-motion:reduce){.snake-segment,.snake-face,.edible{animation:none!important}}'
     ]
     eaten_style = {}
-    for i, cell in enumerate(sorted(first_visit)):
-        at = first_visit[cell]/steps * 100
+    for i, cell in enumerate(sorted(active)):
         name = f'eat{i}'
-        before = max(0, at-.015)
-        after = min(99.80, at+.06)
-        if after <= before:
-            after = min(99.9, before+.001)
         color = p['ramp'][level(cells[cell][1], maximum)]
-        css.append(
-            f'@keyframes {name}{{0%,{before:.4f}%{{fill:{color}}}'
-            f'{after:.4f}%,99.9%{{fill:{p["ramp"][0]}}}'
-            f'100%{{fill:{color}}}}}'
-        )
-        eaten_style[cell] = f' class="edible" style="animation:{name} {seconds:.3f}s linear infinite"'
+        frames = {}
+        for lap_index, first in enumerate(lap_events):
+            lap_start = 100 * boundaries[lap_index] / steps
+            lap_end = 100 * boundaries[lap_index+1] / steps
+            at = 100 * first[cell] / steps
+            frames[round(lap_start, 5)] = color
+            frames[round(max(lap_start, at-.015), 5)] = color
+            frames[round(min(lap_end-.006, at+.035), 5)] = p['ramp'][0]
+            frames[round(lap_end-.004, 5)] = p['ramp'][0]
+            frames[round(lap_end, 5)] = color
+        css.append('@keyframes '+name+'{' + ''.join(
+            f'{k:.5f}%{{fill:{v}}}' for k, v in sorted(frames.items())
+        )+'}')
+        eaten_style[cell] = f' class="edible" style="animation:{name} {seconds:.3f}s step-end infinite"'
     out.append('<style>' + ''.join(css) + '</style>')
 
     # Calendar remains legible as a stationary background beneath the snake.
@@ -336,7 +360,7 @@ def render_snake(days, theme, seed="preview"):
                 f'fill="{p["accent"]}" opacity="{opacity:.2f}"/>'
             )
     out += [
-        text(25, 149, 'Each run explores a new route. Active squares are collected; the grid resets each lap.',
+        text(25, 149, 'Four distinct routes per cycle. Every active day gets eaten, then respawns.',
              p['muted'], 9.5, 'class="mono"'), '</svg>'
     ]
     return '\n'.join(out)+'\n'
