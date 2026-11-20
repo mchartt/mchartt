@@ -57,7 +57,7 @@ def validate():
                 raise ValueError(f"Missing accessible SVG title: {rel}")
 
     # Check the output of both renderers even if the README changes later.
-    for stem in ("header", "contributions", "snake", "languages"):
+    for stem in ("header", "terminal", "contributions", "snake", "languages"):
         for theme in ("dark", "light"):
             path = ROOT / "assets" / f"{stem}.{theme}.svg"
             if not path.exists():
@@ -78,7 +78,7 @@ def validate():
     if not (data["active_days"] <= 365 and
             data["current_streak"] <= data["longest_streak_in_window"] <= 365):
         raise ValueError("Impossible streak statistics")
-    print(f"Validated {len(images.paths)} README images, 8 generated SVGs and 365-day activity data")
+    print(f"Validated {len(images.paths)} README images, 10 generated SVGs and 365-day activity data")
 
 
 if __name__ == "__main__":
