@@ -79,6 +79,15 @@ jobs:
           git add assets/
           if ! git diff --cached --quiet; then
             git commit -m 'chore(profile): refresh statistics and animations [skip ci]'
-            git pull --rebase origin main
-            git push origin HEAD:main
+            # Concurrent workflow runs can update generated SVGs first.
+            # With rebase, "theirs" means our newly generated commit.
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              git fetch origin main
+              git rebase -X theirs origin/main
+            done
+            echo 'Failed to push generated assets after four attempts' >&2
+            exit 1
           fi
