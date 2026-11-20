@@ -14,6 +14,11 @@ I'm a **Computer Engineering student at Politecnico di Milano**. I build web app
 
 Currently exploring software architecture, data management and the details that make an application reliable.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/terminal.dark.svg" />
+  <img src="./assets/terminal.light.svg" width="100%" alt="Animated developer terminal with ASCII-art MC monogram, backend and software engineering identity" />
+</picture>
+
 ## Selected work
 
 <table>
@@ -70,7 +75,7 @@ Currently exploring software architecture, data management and the details that 
   <img src="./assets/languages.light.svg" width="100%" alt="Language distribution across public source repositories" />
 </picture>
 
-### Contribution snake
+### Contribution snake · randomized
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/snake.dark.svg" />
@@ -80,7 +85,7 @@ Currently exploring software architecture, data management and the details that 
 <details>
   <summary>About these visuals</summary>
   <p>The graphics are generated twice a day by GitHub Actions and served from this repository. The 3D calendar, streaks and snake use the contribution counts already visible on my public GitHub profile, including anonymous private counts when shared. Statistics cover the last 365 days; an empty today does not break yesterday's current streak.</p>
-  <p>The banner, skyline and snake are custom SVG, with reduced-motion support. Language cards and toolkit badges use <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Language shares measure code size across public source repositories, not proficiency.</p>
+  <p>The banner, terminal ASCII art, skyline and snake are custom SVG, with reduced-motion support. Each scheduled refresh randomizes the snake's path so it seeks out and collects all active contribution days; the path is fixed during each playback because GitHub profile READMEs cannot execute JavaScript. Language cards and toolkit badges use <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Language shares measure code size across public source repositories, not proficiency.</p>
   <p><a href="https://github.com/mchartt/mchartt/actions/workflows/snake.yml">View the latest refresh →</a></p>
 </details>
 
