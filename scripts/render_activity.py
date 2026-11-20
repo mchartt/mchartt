@@ -11,6 +11,8 @@ import json
 import math
 import os
 import re
+import random
+import secrets
 import sys
 from urllib.request import Request, urlopen
 
@@ -163,7 +165,71 @@ def render_skyline(days, theme):
     return '\n'.join(out)+'\n'
 
 
-def render_snake(days, theme):
+def snake_route(cells, seed):
+    """Create a reproducibly randomized, closed, grid-adjacent route.
+
+    Choose nearby uncollected contribution cells in a different order every
+    refresh, and use randomized shortest paths between them. Crossing an
+    active cell collects it even when it was not the current target. Unlike
+    the old row-by-row scan, the snake actually seeks out activity.
+    """
+    rng = random.Random(str(seed))
+    weeks = max(week for week, _ in cells) + 1
+    remaining = {cell for cell, (_, count) in cells.items() if count > 0}
+    start = rng.choice(sorted(remaining)) if remaining else (weeks // 2, 3)
+    route = [start]
+    remaining.discard(start)
+
+    def neighbors(cell):
+        w, d = cell
+        choices = [(w+1, d), (w-1, d), (w, d+1), (w, d-1)]
+        rng.shuffle(choices)
+        return [(x, y) for x, y in choices
+                if 0 <= x < weeks and 0 <= y < 7]
+
+    def connect(source, target):
+        # Randomizing BFS neighbor order produces different shortest routes.
+        from collections import deque
+        queue = deque([source])
+        parent = {source: None}
+        while queue:
+            current = queue.popleft()
+            if current == target:
+                break
+            for neighbor in neighbors(current):
+                if neighbor not in parent:
+                    parent[neighbor] = current
+                    queue.append(neighbor)
+        if target not in parent:
+            raise ValueError("Contribution grid is unexpectedly disconnected")
+        path = []
+        cursor = target
+        while cursor is not None:
+            path.append(cursor)
+            cursor = parent[cursor]
+        return list(reversed(path))
+
+    while remaining:
+        current = route[-1]
+        # Strong preference for nearby dots, but not a predictable order.
+        choices = sorted(remaining, key=lambda c: (
+            abs(c[0]-current[0]) + abs(c[1]-current[1])
+            + rng.uniform(0, 3.5)))[:min(5, len(remaining))]
+        target = rng.choice(choices)
+        for cell in connect(current, target)[1:]:
+            route.append(cell)
+            remaining.discard(cell)
+
+    # Loop without teleporting: after the last dot, walk back to the start.
+    route.extend(connect(route[-1], route[0])[1:])
+    if len(route) == 1:
+        neighbor = neighbors(start)[0]
+        route.extend([neighbor, start])
+    assert route[0] == route[-1]
+    return route
+
+
+def render_snake(days, theme, seed="preview"):
     p = PALETTES[theme]
     maximum = max(count for _, count in days) or 1
     start = days[0][0] - timedelta(days=(days[0][0].weekday()+1)%7)
@@ -171,36 +237,109 @@ def render_snake(days, theme):
     for day, count in days:
         week, weekday = divmod((day-start).days, 7)
         cells[(week, weekday)] = (day, count)
-    weeks = max(week for week, _ in cells)+1
-    path = [(week, d) for week in range(weeks) for d in (range(7) if week%2==0 else range(6,-1,-1))]
-    points = [(25+w*15, 23+d*15) for w,d in path]
-    # Return outside the grid so the loop has no jump through contribution cells.
-    points += [(points[-1][0]+15, points[-1][1]), (points[-1][0]+15, 8), (10,8), (10,23), points[0]]
-    steps = len(points)-1
-    motion = ''.join(f'{i/steps*100:.5f}%{{transform:translate({x}px,{y}px)}}' for i,(x,y) in enumerate(points))
-    out = svg_start(846, 146, 'Animated snake traversing the public profile contribution calendar', p)
-    out.append(f'<style>@keyframes walk{{{motion}}}.segment{{animation:walk 42s linear infinite}}@media(prefers-reduced-motion:reduce){{.segment{{animation:none!important}}}}</style>')
-    lookup = {cell:i for i,cell in enumerate(path)}
-    for (w,d), (day,count) in cells.items():
-        x,y = 25+w*15,23+d*15
-        color=p['ramp'][level(count,maximum)]
-        if count:
-            # Fade a cell after the snake reaches it, restoring it on each loop.
-            at=lookup[(w,d)]/steps*100
-            key=f'eat{w}x{d}'
-            frames = f'0%,{max(0,at-.02):.5f}%' + '{fill:'+color+'}'
-            frames += f'{min(99.99,at+.02):.5f}%,99.99%' + '{fill:'+p['ramp'][0]+'}'
-            frames += '100%{fill:'+color+'}'
-            out.append(f'<style>@keyframes {key}{{{frames}}}@media(prefers-reduced-motion:reduce){{.c{key}{{animation:none!important}}}}</style>')
-            animate=f' class="c{key}" style="animation:{key} 42s linear infinite"'
-        else:
-            animate=''
-        out.append(f'<rect x="{x}" y="{y}" width="11" height="11" rx="2" fill="{color}"{animate}><title>{day.isoformat()}: {count} contributions</title></rect>')
-    for i in reversed(range(8)):
-        out.append(f'<rect class="segment" x="0" y="0" width="11" height="11" rx="3" fill="{p["cyan"] if i==0 else p["accent"]}" opacity="{1-i*.08:.2f}" style="animation-delay:-{i*42/steps:.5f}s;transform:translate({points[0][0]}px,{points[0][1]}px)"/>')
-    out += [text(25, 134, 'Same calendar. One continuous path.', p['muted'], 10, 'class="mono"'), '</svg>']
-    return '\n'.join(out)+'\n'
+    route = snake_route(cells, seed)
+    steps = len(route) - 1
+    seconds = max(24, min(100, steps * .24))
 
+    def percent(i):
+        return f'{100*i/steps:.5f}%'
+
+    def coords(cell):
+        w, d = cell
+        return 25+w*15, 23+d*15
+
+    # Every segment follows precisely the same CLOSED route. Applying a
+    # phase of -i steps puts the head at the FRONT and the tail behind it.
+    motion = ''.join(
+        f'{percent(i)}{{transform:translate({coords(cell)[0]}px,{coords(cell)[1]}px)}}'
+        for i, cell in enumerate(route)
+    )
+    turns = []
+    for i, cell in enumerate(route):
+        following = route[i+1] if i < steps else route[1]
+        dx, dy = following[0]-cell[0], following[1]-cell[1]
+        angle = {(1, 0): 0, (0, 1): 90, (-1, 0): 180, (0, -1): -90}[(dx, dy)]
+        turns.append(f'{percent(i)}{{transform:rotate({angle}deg)}}')
+
+    out = svg_start(846, 162, 'Randomized contribution snake collecting every active day on the GitHub calendar', p)
+    out += [
+        text(25, 16, 'CONTRIBUTION SNAKE // RANDOM WALK', p['accent'], 9.5,
+             'class="mono" letter-spacing="1"'),
+        text(821, 16, f'{len([1 for _, count in cells.values() if count])} ACTIVE CELLS', p['muted'], 9,
+             'class="mono" text-anchor="end"')
+    ]
+
+    # At 100% all eaten cells return for the next animated lap.
+    # The exact *first* visit, not the target order, determines consumption.
+    first_visit = {}
+    for i, cell in enumerate(route[:-1]):
+        if cells.get(cell, (None, 0))[1] and cell not in first_visit:
+            first_visit[cell] = i
+    expected = {cell for cell, (_, count) in cells.items() if count}
+    if set(first_visit) != expected:
+        raise ValueError('The snake must collect all active contribution cells')
+
+    css = [
+        f'@keyframes snake-walk{{{motion}}}',
+        f'@keyframes snake-face{{{"".join(turns)}}}',
+        f'.snake-segment{{animation:snake-walk {seconds:.3f}s linear infinite}}',
+        f'.snake-face{{transform-origin:5.5px 5.5px;animation:snake-face {seconds:.3f}s step-end infinite}}',
+        '@media(prefers-reduced-motion:reduce){.snake-segment,.snake-face,.edible{animation:none!important}}'
+    ]
+    eaten_style = {}
+    for i, cell in enumerate(sorted(first_visit)):
+        at = first_visit[cell]/steps * 100
+        name = f'eat{i}'
+        before = max(0, at-.015)
+        after = min(99.80, at+.06)
+        if after <= before:
+            after = min(99.9, before+.001)
+        color = p['ramp'][level(cells[cell][1], maximum)]
+        css.append(
+            f'@keyframes {name}{{0%,{before:.4f}%{{fill:{color}}}'
+            f'{after:.4f}%,99.9%{{fill:{p["ramp"][0]}}}'
+            f'100%{{fill:{color}}}}}'
+        )
+        eaten_style[cell] = f' class="edible" style="animation:{name} {seconds:.3f}s linear infinite"'
+    out.append('<style>' + ''.join(css) + '</style>')
+
+    # Calendar remains legible as a stationary background beneath the snake.
+    for (w, d), (day, count) in cells.items():
+        x, y = coords((w, d))
+        color = p['ramp'][level(count, maximum)]
+        out.append(
+            f'<rect x="{x}" y="{y}" width="11" height="11" rx="2" '
+            f'fill="{color}"{eaten_style.get((w, d), "")}>'
+            f'<title>{day.isoformat()}: {count} contributions</title></rect>'
+        )
+
+    # Draw the tail FIRST, and the cyan head LAST so it cannot be covered.
+    for i in reversed(range(9)):
+        x, y = coords(route[0])
+        lag = i * seconds / steps
+        phase_delay = 0 if i == 0 else -(seconds-lag)
+        common = (f'class="snake-segment" style="animation-delay:{phase_delay:.5f}s;'
+                  f'transform:translate({x}px,{y}px)"')
+        if i == 0:
+            out.append(
+                f'<g {common}>'
+                f'<rect width="11" height="11" rx="4.2" fill="{p["cyan"]}"/>'
+                f'<g class="snake-face">'
+                f'<circle cx="8.2" cy="3" r="1.25" fill="{p["bg"]}"/>'
+                f'<circle cx="8.2" cy="8" r="1.25" fill="{p["bg"]}"/>'
+                '</g></g>'
+            )
+        else:
+            opacity = 1 - i*.082
+            out.append(
+                f'<rect {common} width="11" height="11" rx="3.7" '
+                f'fill="{p["accent"]}" opacity="{opacity:.2f}"/>'
+            )
+    out += [
+        text(25, 149, 'Each run explores a new route. Active squares are collected; the grid resets each lap.',
+             p['muted'], 9.5, 'class="mono"'), '</svg>'
+    ]
+    return '\n'.join(out)+'\n'
 
 def main():
     today = datetime.now(timezone.utc).date()
@@ -210,9 +349,12 @@ def main():
     else:
         counts = load_calendar(os.environ.get('PROFILE_USERNAME', 'mchartt'))
     days = calendar_days(counts, today)
+    # One seed per run: dark/light get the same route, each scheduled refresh
+    # receives a different one. GitHub READMEs cannot execute page-load JS.
+    seed = os.environ.get('SNAKE_SEED') or str(secrets.randbits(64))
     for theme in PALETTES:
         (ROOT/'assets'/f'contributions.{theme}.svg').write_text(render_skyline(days, theme))
-        (ROOT/'assets'/f'snake.{theme}.svg').write_text(render_snake(days, theme))
+        (ROOT/'assets'/f'snake.{theme}.svg').write_text(render_snake(days, theme, seed))
     total, active, current, longest = stats(days)
     metadata = dict(source='GitHub public profile calendar', from_date=days[0][0].isoformat(), to_date=today.isoformat(), total=total, active_days=active, current_streak=current, longest_streak_in_window=longest)
     (ROOT/'assets'/'activity.json').write_text(json.dumps(metadata, indent=2)+'\n')
