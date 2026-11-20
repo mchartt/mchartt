@@ -85,7 +85,7 @@ Currently exploring software architecture, data management and the details that 
 <details>
   <summary>About these visuals</summary>
   <p>The graphics are generated twice a day by GitHub Actions and served from this repository. The 3D calendar, streaks and snake use the contribution counts already visible on my public GitHub profile, including anonymous private counts when shared. Statistics cover the last 365 days; an empty today does not break yesterday's current streak.</p>
-  <p>The banner, terminal ASCII art, skyline and snake are custom SVG, with reduced-motion support. Each scheduled refresh randomizes the snake's path so it seeks out and collects all active contribution days; the path is fixed during each playback because GitHub profile READMEs cannot execute JavaScript. Language cards and toolkit badges use <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Language shares measure code size across public source repositories, not proficiency.</p>
+  <p>The banner, terminal ASCII art, skyline and snake are custom SVG, with reduced-motion support. The snake plays four different randomized routes in a continuous cycle, collects every active contribution day on each lap and then respawns the dots. GitHub Actions generates a fresh set of routes at every scheduled refresh; GitHub READMEs cannot execute JavaScript to randomize each page load. Language cards and toolkit badges use <a href="https://github.com/seijikohara/profile-cards-action">Profile Cards</a>. Language shares measure code size across public source repositories, not proficiency.</p>
   <p><a href="https://github.com/mchartt/mchartt/actions/workflows/snake.yml">View the latest refresh →</a></p>
 </details>
 
